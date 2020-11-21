@@ -1,0 +1,10 @@
+---
+# vars file for Flask
+replicaCount: 2
+
+port: 5000
+
+image: "quay.io/opentestlabs/flask-app:latest"
+
+serviceType: NodePort
+servicePort: 8000

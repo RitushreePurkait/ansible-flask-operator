@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    name: vue
+  name: vue
+spec:
+  replicas: {{ .Values.vue.replicaCount }}
+  selector:
+    matchLabels:
+      app: vue
+  template:
+    metadata:
+      labels:
+        app: vue
+    spec:
+      {{- with .Values.vue.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+      - image: "{{ .Values.vue.image }}"
+        imagePullPolicy: Always
+        name: vue
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      restartPolicy: Always
+      securityContext: {}
+      terminationGracePeriodSeconds: 30

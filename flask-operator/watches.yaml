@@ -1,0 +1,10 @@
+---
+# Use the 'create api' subcommand to add watches to this file.
+- version: v1alpha1
+  group: example.com
+  kind: Flask
+  role: flask
+  overrideValues:    
+    flask.image: $RELATED_IMAGE_FLASK
+    vue.image: $RELATED_IMAGE_VUE
+# +kubebuilder:scaffold:watch

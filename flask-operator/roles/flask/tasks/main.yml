@@ -1,0 +1,44 @@
+---
+# tasks file for Flask
+- name: start flask deployment ansible
+  k8s:
+    definition:
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: flask-deployment
+        namespace: '{{ ansible_operator_meta.namespace }}'
+      spec:
+        serviceAccountName: flask-operator
+        serviceAccount: flask-operator
+        selector:
+          matchLabels:
+            app: flask-ansible
+        replicas: "{{ replicaCount }}"
+        template:
+          metadata:
+            labels:
+              app: flask-ansible
+          spec:
+            containers:
+            - name: flask
+              image: "{{ image }}"
+              ports:
+              - containerPort: "{{ port }}"
+
+- name: start flask service ansible
+  k8s:
+    definition:
+      kind: Service
+      apiVersion: v1
+      metadata:
+        name: flask-deployment-service
+        namespace: '{{ ansible_operator_meta.namespace }}'
+      spec:
+        selector:
+          app: flask-ansible
+        ports:
+        - protocol: TCP
+          port: "{{ servicePort }}"
+          targetPort: "{{ port }}"          
+        type: "{{ serviceType }}"

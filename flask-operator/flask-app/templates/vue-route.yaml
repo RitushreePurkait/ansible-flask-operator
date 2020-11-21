@@ -1,0 +1,14 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: vue-route
+  labels:
+    app: vue
+spec:
+  to:
+    kind: Service
+    name: vue-service
+    weight: 100
+  port:
+    targetPort: {{ .Values.vue.service.port }}
+  wildcardPolicy: None

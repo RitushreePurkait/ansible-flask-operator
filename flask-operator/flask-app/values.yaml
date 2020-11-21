@@ -1,0 +1,25 @@
+# Default values for flask-app.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# Variables for Flask Server
+flask:
+  image: quay.io/rhm_samples/flask-server:v0.0.1
+  # To pass image pull secrets (if any)
+  imagePullSecrets: []
+  replicaCount: 1
+  
+  service:
+    type: ClusterIP
+    port: 5000
+
+# Variables for Vue Client
+vue:
+  image: quay.io/rhm_samples/flask-vue-client:v0.0.1
+  # To pass image pull secrets (if any)
+  imagePullSecrets: []
+  replicaCount: 1
+  
+  service:
+    type: ClusterIP
+    port: 8080
